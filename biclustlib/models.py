@@ -6,15 +6,7 @@
     This file is part of SeCCA.
 
 """
-
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-from Pyfhel import Pyfhel
-
-import time
-from scipy import stats
 
 class Bicluster:
     """This class models a bicluster.
@@ -60,51 +52,14 @@ class Bicluster:
         cols_union = np.union1d(self.cols, other.cols)
         return Bicluster(rows_union, cols_union)
 
-    # def overlap(self, other):
-    #     min_area = min(self.area, other.area)
-    #     return self.intersection(other).area / min_area
-
     def overlap(self, other):
-
-        # HE Computation
-        HE = Pyfhel()
-        HE.contextGen(p=65537, m=2048, flagBatching=True)
-        HE.keyGen()
-
         min_area = min(self.area, other.area)
-        area = self.intersection(other).area
-        enc_min_area = HE.encryptFrac(min_area)
-        enc_area = HE.encryptFrac(area)
-        enc_overlap = enc_area / enc_min_area
-        print(enc_overlap)
-        decrypt_min_area = enc_min_area.decrypt()
-        decrypt_area = enc_area.decrypt()
-        decrypt_area = enc_overlap.decrypt()
-        print(decrypt_area)
-        return decrypt_area
-
-    # @property
-    # def area(self):
-    #     """Calculates the number of matrix elements of the bicluster."""
-    #     return len(self.rows) * len(self.cols)
+        return self.intersection(other).area / min_area
 
     @property
     def area(self):
         """Calculates the number of matrix elements of the bicluster."""
-        # HE Computation
-        HE = Pyfhel()
-        HE.contextGen(p=65537, m=2048, flagBatching=True)
-        HE.keyGen()
-
-        enc_len_rows = HE.encryptInt(len(self.rows))
-        enc_len_cols = HE.encryptInt(len(self.cols))
-        enc_area = enc_len_rows * enc_len_cols
-        print(enc_area)
-        decrypt_len_rows = enc_len_rows.decrypt()
-        decrypt_len_cols = enc_len_cols.decrypt()
-        decrypt_area = enc_area.decrypt()
-
-        return decrypt_area
+        return len(self.rows) * len(self.cols)
 
     def sort(self):
         """Sorts the array of row and the array of column indices of the bicluster."""

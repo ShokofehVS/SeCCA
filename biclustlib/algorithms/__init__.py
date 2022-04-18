@@ -8,7 +8,7 @@
 """
 
 from .cca import ChengChurchAlgorithm
-from .SeCCA import SecuredChengChurchAlgorithm
+from .secca import SecuredChengChurchAlgorithm
 from .type1 import SecuredChengChurchAlgorithmType1
 from .type2 import SecuredChengChurchAlgorithmType2
 from .type3 import SecuredChengChurchAlgorithmType3

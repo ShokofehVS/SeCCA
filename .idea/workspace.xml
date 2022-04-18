@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e6a49a30-40d8-42ca-99ae-5f4ed3ad0506" name="Changes" comment="Update files" />
+    <list default="true" id="e6a49a30-40d8-42ca-99ae-5f4ed3ad0506" name="Changes" comment="Update file">
+      <change afterPath="$PROJECT_DIR$/biclustlib/algorithms/secca.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/biclustlib/algorithms/type1.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/biclustlib/algorithms/type2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/biclustlib/algorithms/type3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/biclustlib/algorithms/type4.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/biclustlib/evaluation/evaluation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/secured_cheng_church_yeast.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,6 +23,19 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/main" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="main" />
@@ -47,11 +68,37 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "/home/shokofehvs/github/SeCCA",
+    "last_opened_file_path": "/home/shokofehvs/github/biclustlib",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
   }
 }]]></component>
-  <component name="RunManager" selected="Python.evaluation">
+  <component name="Push.Settings">
+    <force-push-targets>
+      <force-push-target remote-path="origin" branch="main" />
+    </force-push-targets>
+  </component>
+  <component name="RunManager" selected="Python.cheng_church_yeast">
+    <configuration name="cheng_church_yeast" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="SeCCA" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/cheng_church_yeast.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="evaluation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SeCCA" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -96,6 +143,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.cheng_church_yeast" />
         <item itemvalue="Python.evaluation" />
         <item itemvalue="Python.secured_cheng_church_yeast" />
       </list>
@@ -145,7 +193,98 @@
       <option name="project" value="LOCAL" />
       <updated>1650298620906</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Update files">
+      <created>1650299352021</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1650299352021</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Update files">
+      <created>1650299620828</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1650299620828</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Update Setup">
+      <created>1650299730068</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1650299730068</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Update Setup">
+      <created>1650299774588</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1650299774588</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Update example test">
+      <created>1650299953546</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1650299953546</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Update model file">
+      <created>1650300044482</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1650300044482</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Update file">
+      <created>1650300106456</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1650300106456</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Update file">
+      <created>1650300204417</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1650300204417</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Update file">
+      <created>1650300357480</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1650300357480</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Update file">
+      <created>1650300428670</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1650300428670</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Update file">
+      <created>1650300538405</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1650300538405</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Update file">
+      <created>1650300562304</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1650300562304</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Update file">
+      <created>1650300586684</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1650300586685</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -219,6 +358,10 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Update files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update files" />
+    <MESSAGE value="Update Setup" />
+    <MESSAGE value="Update example test" />
+    <MESSAGE value="Update model file" />
+    <MESSAGE value="Update file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update file" />
   </component>
 </project>

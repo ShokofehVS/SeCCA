@@ -11,21 +11,13 @@ from ._base import BaseBiclusteringAlgorithm
 from ..models import Bicluster, Biclustering
 from sklearn.utils.validation import check_array
 from Pyfhel import Pyfhel, PyCtxt
-from scipy import stats
-
-import numpy as np
-import bottleneck as bn
-import random
-import math
-import pandas as pd
-import matplotlib.pyplot as plt
 import numpy as np
 import time
-import threading
+
 
 
 class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
-    """SSecured Cheng and Church's Algorithm (CCA)
+    """Secured Cheng and Church's Algorithm (CCA)
 
     SeCCA searches for maximal submatrices with a Mean Squared Residue value below a pre-defined threshold
         by Homomorphic Encryption operations

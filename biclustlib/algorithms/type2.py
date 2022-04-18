@@ -1,21 +1,10 @@
 """
-    biclustlib: A Python library of biclustering algorithms and evaluation measures.
-    Copyright (C) 2017  Victor Alexandre Padilha
+    SeCCA: A Python library of privacy-preserved biclustering algorithm (Cheng and Church) with Homomorphic Encryption
 
-    This file is part of biclustlib.
+    Copyright (C) 2022  Shokofeh VahidianSadegh
 
-    biclustlib is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    This file is part of SeCCA.
 
-    biclustlib is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from ._base import BaseBiclusteringAlgorithm
@@ -36,17 +25,14 @@ import threading
 
 
 class SecuredChengChurchAlgorithmType2(BaseBiclusteringAlgorithm):
-    """Cheng and Church's Algorithm (CCA)
+    """Secured Cheng and Church's Algorithm (CCA)
 
-    CCA searches for maximal submatrices with a Mean Squared Residue value below a pre-defined threshold.
-
-    Reference
-    ----------
-    Cheng, Y., & Church, G. M. (2000). Biclustering of expression data. In Ismb (Vol. 8, No. 2000, pp. 93-103).
+    SeCCA searches for maximal submatrices with a Mean Squared Residue value below a pre-defined threshold
+        by Homomorphic Encryption operations
 
     Parameters
     ----------
-    num_biclusters : int, default: 10
+    num_biclusters : int, default: 5
         Number of biclusters to be found.
 
     msr_threshold : float or str, default: 'estimate'
@@ -75,6 +61,7 @@ class SecuredChengChurchAlgorithmType2(BaseBiclusteringAlgorithm):
         ----------
         data : numpy.ndarray
         """
+        print("SeCCA type 2")
         # Creating empty Pyfhel object
         HE = Pyfhel()
         # Generating context
@@ -95,7 +82,7 @@ class SecuredChengChurchAlgorithmType2(BaseBiclusteringAlgorithm):
         t_enc = []
         t_dec = []
         for i in range(self.num_biclusters):
-            print("Number of the Bicluster:{}".format(i))
+            print("Number of the Bicluster:{}".format(i+1))
             rows = np.ones(num_rows, dtype=np.bool)
             cols = np.ones(num_cols, dtype=np.bool)
 
@@ -181,12 +168,12 @@ class SecuredChengChurchAlgorithmType2(BaseBiclusteringAlgorithm):
             rows_old = np.copy(rows)
 
             msr, _, _ = self._calculate_msr(data, rows, cols, HE, t_enc, t_dec)
-            col_msr = self._calculate_msr_col_addition(data, rows, cols, HE, t_enc, t_dec)
+            col_msr = self._calculate_msr_col_addition(data, rows, cols)
             cols2add = np.where(col_msr <= msr)[0]
             cols[cols2add] = True
 
             msr, _, _ = self._calculate_msr(data, rows, cols, HE, t_enc, t_dec)
-            row_msr, row_inverse_msr = self._calculate_msr_row_addition(data, rows, cols, HE, t_enc, t_dec)
+            row_msr, row_inverse_msr = self._calculate_msr_row_addition(data, rows, cols)
             rows2add = np.where(np.logical_or(row_msr <= msr, row_inverse_msr <= msr))[0]
             rows[rows2add] = True
 
@@ -197,12 +184,13 @@ class SecuredChengChurchAlgorithmType2(BaseBiclusteringAlgorithm):
         """Calculate the mean squared residues of the rows, of the columns and of the full data matrix."""
 
         # SeCCA Type 2
-        # t_enc0 = time.perf_counter()
+
         # Encrypting sub_data
         # 1. make sub_data a contiguous array in memory
         # 2. change 2d arrays into 1d
         # 3. Convert plaintext into ciphertext
         # 4. Reshape the array
+        t_enc0 = time.perf_counter()
         sub_data = data[rows][:, cols]
         sub_data = np.ascontiguousarray(sub_data)
         enc_sub_data = sub_data.flatten()
@@ -236,12 +224,12 @@ class SecuredChengChurchAlgorithmType2(BaseBiclusteringAlgorithm):
         # Encrypting col_msr
         enc_col_msr = np.mean(enc_squared_residues, axis=0)
 
-        # t_enc1 = time.perf_counter()
-        # t_enc.append(t_enc1 - t_enc0)
-        # print("Encryption Time: ", round(sum(t_enc), 5), "Seconds")
+        t_enc1 = time.perf_counter()
+        t_enc.append(t_enc1 - t_enc0)
+        print("Encryption Time: ", round(sum(t_enc), 5), "Seconds")
 
-        # t_dec0 = time.perf_counter()
         # Decrypting msr
+        t_dec0 = time.perf_counter()
         decrypted_msr = HE.decryptFrac(enc_msr)
 
         # Decrypting msr_row
@@ -253,14 +241,14 @@ class SecuredChengChurchAlgorithmType2(BaseBiclusteringAlgorithm):
         decrypted_msr_col = np.empty(len(enc_col_msr), dtype=PyCtxt)
         for i in np.arange(len(enc_col_msr)):
             decrypted_msr_col[i] = HE.decryptFrac(enc_col_msr[i])
-        # t_dec1 = time.perf_counter()
-        #
-        # t_dec.append(t_dec1 - t_dec0)
-        # print("Decryption time: ", round(sum(t_dec), 5), "Seconds")
+        t_dec1 = time.perf_counter()
+
+        t_dec.append(t_dec1 - t_dec0)
+        print("Decryption time: ", round(sum(t_dec), 5), "Seconds")
 
         return decrypted_msr, decrypted_msr_row, decrypted_msr_col
 
-    def _calculate_msr_col_addition(self, data, rows, cols, HE, t_enc, t_dec):
+    def _calculate_msr_col_addition(self, data, rows, cols):
         """Calculate the mean squared residues of the columns for the node addition step."""
         sub_data = data[rows][:, cols]
         sub_data_rows = data[rows]
@@ -275,7 +263,7 @@ class SecuredChengChurchAlgorithmType2(BaseBiclusteringAlgorithm):
 
         return col_msr
 
-    def _calculate_msr_row_addition(self, data, rows, cols, HE, t_enc, t_dec):
+    def _calculate_msr_row_addition(self, data, rows, cols):
         """Calculate the mean squared residues of the rows and of the inverse of the rows for
         the node addition step."""
         sub_data = data[rows][:, cols]

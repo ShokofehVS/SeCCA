@@ -41,28 +41,6 @@ def load_yeast_tavazoie():
     genes = np.loadtxt(join(module_dir, 'data', 'yeast_tavazoie', 'genes_yeast_tavazoie.txt'), dtype=np.str)
     return pd.DataFrame(data, index=genes)
 
-def load_prelic():
-    """Load and return a dictionary containing the yeast (Gasch et al., 2000) and arabidopsis datasets used by
-    Prelic et al. (2006). Each dictionary key is a dataset name. Each dictionary value is a pandas.DataFrame.
-    These datasets are freely available in http://people.ee.ethz.ch/~sop/bimax/.
-
-    Reference
-    ---------
-    Prelic, A., Bleuler, S., Zimmermann, P., Wille, A., Buhlmann, P., Gruissem, W., Hennig, L., Thiele, L. &
-    Zitzler, E. (2006). A systematic comparison and evaluation of biclustering methods for gene expression data.
-    Bioinformatics, 22(9), 1122-1129.
-
-    Gasch, A. P., Spellman, P. T., Kao, C. M., Carmel-Harel, O., Eisen, M. B., Storz, G., Botstein, D. & Brown,
-    P. O. (2000). Genomic expression programs in the response of yeast cells to environmental changes. Molecular
-    biology of the cell, 11(12), 4241-4257.
-    """
-    module_dir = dirname(__file__)
-    datasets_dir_path = join(module_dir, 'data', 'prelic')
-
-    return _load_benchmark(datasets_dir_path,
-                           read_func=lambda f : pd.read_table(f, delim_whitespace=True, header=0, index_col=0),
-                           split_func=lambda f : f.split('.')[0])
-
 def load_yeast_benchmark():
     """Load and return a dictionary containing the collection of 17 yeast datasets proposed as a benchmark by
     Jaskowiak et al. (2013). Each dictionary key is a dataset name. Each dictionary value is a pandas.DataFrame.

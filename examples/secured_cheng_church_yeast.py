@@ -1,5 +1,5 @@
 import time
-from biclustlib.algorithms import ChengChurchAlgorithm
+from biclustlib.algorithms import SecuredChengChurchAlgorithm
 from biclustlib.datasets import load_yeast_tavazoie
 import numpy as np
 
@@ -13,7 +13,7 @@ missing = np.where(data < 0.0)
 data[missing] = np.random.randint(low=0, high=800, size=len(missing[0]))
 
 # creating an instance of the ChengChurchAlgorithm class and running with the parameters
-cca = ChengChurchAlgorithm(num_biclusters=5, msr_threshold=300.0, multiple_node_deletion_threshold=1.2)
+cca = SecuredChengChurchAlgorithm(num_biclusters=5, msr_threshold=300.0, multiple_node_deletion_threshold=1.2)
 biclustering = cca.run(data)
 print(biclustering)
 

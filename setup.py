@@ -3,9 +3,9 @@ from setuptools import setup
 setup(name='biclustlib',
       version='0.1',
       description='Library of biclustering algorithms, evaluation measures and dataset',
-      url='https://github.com/padilha/biclustlib',
+      url='https://github.com/ShokofehVS/SeCCA',
       author='...',
       author_email='...',
-      license='GPLv3',
-      packages=['biclustlib'],
+      license='MIT',
+      packages=['SeCCA'],
       zip_safe=False)

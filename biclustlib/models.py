@@ -1,21 +1,10 @@
 """
-    biclustlib: A Python library of biclustering algorithms and evaluation measures.
-    Copyright (C) 2017  Victor Alexandre Padilha
+    SeCCA: A Python library of privacy-preserved biclustering algorithm (Cheng and Church) with Homomorphic Encryption
 
-    This file is part of biclustlib.
+    Copyright (C) 2022  Shokofeh VahidianSadegh
 
-    biclustlib is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    This file is part of SeCCA.
 
-    biclustlib is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import numpy as np
@@ -71,51 +60,14 @@ class Bicluster:
         cols_union = np.union1d(self.cols, other.cols)
         return Bicluster(rows_union, cols_union)
 
-    # def overlap(self, other):
-    #     min_area = min(self.area, other.area)
-    #     return self.intersection(other).area / min_area
-
     def overlap(self, other):
-
-        # HE Computation
-        HE = Pyfhel()
-        HE.contextGen(p=65537, m=2048, flagBatching=True)
-        HE.keyGen()
-
         min_area = min(self.area, other.area)
-        area = self.intersection(other).area
-        enc_min_area = HE.encryptFrac(min_area)
-        enc_area = HE.encryptFrac(area)
-        enc_overlap = enc_area / enc_min_area
-        print(enc_overlap)
-        decrypt_min_area = enc_min_area.decrypt()
-        decrypt_area = enc_area.decrypt()
-        decrypt_area = enc_overlap.decrypt()
-        print(decrypt_area)
-        return decrypt_area
-
-    # @property
-    # def area(self):
-    #     """Calculates the number of matrix elements of the bicluster."""
-    #     return len(self.rows) * len(self.cols)
+        return self.intersection(other).area / min_area
 
     @property
     def area(self):
         """Calculates the number of matrix elements of the bicluster."""
-        # HE Computation
-        HE = Pyfhel()
-        HE.contextGen(p=65537, m=2048, flagBatching=True)
-        HE.keyGen()
-
-        enc_len_rows = HE.encryptInt(len(self.rows))
-        enc_len_cols = HE.encryptInt(len(self.cols))
-        enc_area = enc_len_rows * enc_len_cols
-        print(enc_area)
-        decrypt_len_rows = enc_len_rows.decrypt()
-        decrypt_len_cols = enc_len_cols.decrypt()
-        decrypt_area = enc_area.decrypt()
-
-        return decrypt_area
+        return len(self.rows) * len(self.cols)
 
     def sort(self):
         """Sorts the array of row and the array of column indices of the bicluster."""

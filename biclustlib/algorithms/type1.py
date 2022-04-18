@@ -1,21 +1,10 @@
 """
-    biclustlib: A Python library of biclustering algorithms and evaluation measures.
-    Copyright (C) 2017  Victor Alexandre Padilha
+    SeCCA: A Python library of privacy-preserved biclustering algorithm (Cheng and Church) with Homomorphic Encryption
 
-    This file is part of biclustlib.
+    Copyright (C) 2022  Shokofeh VahidianSadegh
 
-    biclustlib is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    This file is part of SeCCA.
 
-    biclustlib is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from ._base import BaseBiclusteringAlgorithm
@@ -36,17 +25,14 @@ import threading
 
 
 class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
-    """Cheng and Church's Algorithm (CCA)
+    """SSecured Cheng and Church's Algorithm (CCA)
 
-    CCA searches for maximal submatrices with a Mean Squared Residue value below a pre-defined threshold.
-
-    Reference
-    ----------
-    Cheng, Y., & Church, G. M. (2000). Biclustering of expression data. In Ismb (Vol. 8, No. 2000, pp. 93-103).
+    SeCCA searches for maximal submatrices with a Mean Squared Residue value below a pre-defined threshold
+        by Homomorphic Encryption operations
 
     Parameters
     ----------
-    num_biclusters : int, default: 10
+    num_biclusters : int, default: 5
         Number of biclusters to be found.
 
     msr_threshold : float or str, default: 'estimate'
@@ -75,6 +61,7 @@ class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
         ----------
         data : numpy.ndarray
         """
+        print("SeCCA type 1")
         # Creating empty Pyfhel object
         HE = Pyfhel()
         # Generating context
@@ -90,9 +77,9 @@ class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
         max_value = np.max(data)
 
         # SeCCA Type 1
-        # t_enc0 = time.perf_counter()
 
         # Encrypting min, max values and msr_threshold values
+        t_enc0 = time.perf_counter()
         max_value = HE.encryptInt(max_value)
         min_value = HE.encryptInt(min_value)
         self.msr_threshold = HE.encryptInt(self.msr_threshold)
@@ -100,30 +87,28 @@ class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
         # Computing msr_thr homomorphically
         msr_thr = (((max_value - min_value) ** 2) / 12) * 0.005 if self.msr_threshold == 'estimate' else self.msr_threshold
 
-        # t_enc1 = time.perf_counter()
-        # print("Encryption Time: ", round(t_enc1 - t_enc0, 5), "Seconds")
+        t_enc1 = time.perf_counter()
+        print("Encryption Time: ", round(t_enc1 - t_enc0, 5), "Seconds")
 
-        # t_dec0 = time.perf_counter()
         # Decrypting min, max values, msr_threshold and msr_thr
+        t_dec0 = time.perf_counter()
         max_value = max_value.decrypt()
         min_value = min_value.decrypt()
         self.msr_threshold = self.msr_threshold.decrypt()
         msr_thr = msr_thr.decrypt()
 
-        # t_dec1 = time.perf_counter()
-        # print("Decryption time: ", round(t_dec1 - t_dec0, 5), "Seconds")
+        t_dec1 = time.perf_counter()
+        print("Decryption time: ", round(t_dec1 - t_dec0, 5), "Seconds")
 
         biclusters = []
-        t_enc = []
-        t_dec = []
+
         for i in range(self.num_biclusters):
-            print("Number of the Bicluster:{}".format(i))
             rows = np.ones(num_rows, dtype=np.bool)
             cols = np.ones(num_cols, dtype=np.bool)
 
-            self._multiple_node_deletion(data, rows, cols, msr_thr, HE, t_enc, t_dec)
-            self._single_node_deletion(data, rows, cols, msr_thr, HE, t_enc, t_dec)
-            self._node_addition(data, rows, cols, HE, t_enc, t_dec)
+            self._multiple_node_deletion(data, rows, cols, msr_thr)
+            self._single_node_deletion(data, rows, cols, msr_thr)
+            self._node_addition(data, rows, cols)
 
             row_indices = np.nonzero(rows)[0]
             col_indices = np.nonzero(cols)[0]
@@ -141,16 +126,16 @@ class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
 
         return Biclustering(biclusters)
 
-    def _single_node_deletion(self, data, rows, cols, msr_thr, HE, t_enc, t_dec):
+    def _single_node_deletion(self, data, rows, cols, msr_thr):
         """Performs the single row/column deletion step (this is a direct implementation of the Algorithm 1 described in
         the original paper)"""
-        msr, row_msr, col_msr = self._calculate_msr(data, rows, cols, HE, t_enc, t_dec)
+        msr, row_msr, col_msr = self._calculate_msr(data, rows, cols)
 
         while msr > msr_thr:
-            self._single_deletion(data, rows, cols, row_msr, col_msr, HE)
-            msr, row_msr, col_msr = self._calculate_msr(data, rows, cols, HE, t_enc, t_dec)
+            self._single_deletion(data, rows, cols, row_msr, col_msr)
+            msr, row_msr, col_msr = self._calculate_msr(data, rows, cols)
 
-    def _single_deletion(self, data, rows, cols, row_msr, col_msr, HE):
+    def _single_deletion(self, data, rows, cols, row_msr, col_msr):
         """Deletes a row or column from the bicluster being computed."""
         row_indices = np.nonzero(rows)[0]
         col_indices = np.nonzero(cols)[0]
@@ -165,10 +150,10 @@ class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
             col2remove = col_indices[col_max_msr]
             cols[col2remove] = False
 
-    def _multiple_node_deletion(self, data, rows, cols, msr_thr, HE, t_enc, t_dec):
+    def _multiple_node_deletion(self, data, rows, cols, msr_thr):
         """Performs the multiple row/column deletion step (this is a direct implementation of the Algorithm 2 described in
         the original paper)"""
-        msr, row_msr, col_msr = self._calculate_msr(data, rows, cols, HE, t_enc, t_dec)
+        msr, row_msr, col_msr = self._calculate_msr(data, rows, cols)
 
         stop = True if msr <= msr_thr else False
 
@@ -181,12 +166,12 @@ class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
             rows[rows2remove] = False
 
             if len(cols) >= self.data_min_cols:
-                msr, row_msr, col_msr = self._calculate_msr(data, rows, cols, HE, t_enc, t_dec)
+                msr, row_msr, col_msr = self._calculate_msr(data, rows, cols)
                 col_indices = np.nonzero(cols)[0]
                 cols2remove = col_indices[np.where(col_msr > self.multiple_node_deletion_threshold * msr)]
                 cols[cols2remove] = False
 
-            msr, row_msr, col_msr = self._calculate_msr(data, rows, cols, HE, t_enc, t_dec)
+            msr, row_msr, col_msr = self._calculate_msr(data, rows, cols)
 
             # Tests if the new MSR value is smaller than the acceptable MSR threshold.
             # Tests if no rows and no columns were removed during this iteration.
@@ -194,7 +179,7 @@ class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
             if msr <= msr_thr or (np.all(rows == rows_old) and np.all(cols == cols_old)):
                 stop = True
 
-    def _node_addition(self, data, rows, cols, HE, t_enc, t_dec):
+    def _node_addition(self, data, rows, cols):
         """Performs the row/column addition step (this is a direct implementation of the Algorithm 3 described in
         the original paper)"""
         stop = False
@@ -202,20 +187,20 @@ class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
             cols_old = np.copy(cols)
             rows_old = np.copy(rows)
 
-            msr, _, _ = self._calculate_msr(data, rows, cols, HE, t_enc, t_dec)
-            col_msr = self._calculate_msr_col_addition(data, rows, cols, HE, t_enc, t_dec)
+            msr, _, _ = self._calculate_msr(data, rows, cols)
+            col_msr = self._calculate_msr_col_addition(data, rows, cols)
             cols2add = np.where(col_msr <= msr)[0]
             cols[cols2add] = True
 
-            msr, _, _ = self._calculate_msr(data, rows, cols, HE, t_enc, t_dec)
-            row_msr, row_inverse_msr = self._calculate_msr_row_addition(data, rows, cols, HE, t_enc, t_dec)
+            msr, _, _ = self._calculate_msr(data, rows, cols)
+            row_msr, row_inverse_msr = self._calculate_msr_row_addition(data, rows, cols)
             rows2add = np.where(np.logical_or(row_msr <= msr, row_inverse_msr <= msr))[0]
             rows[rows2add] = True
 
             if np.all(rows == rows_old) and np.all(cols == cols_old):
                 stop = True
 
-    def _calculate_msr(self, data, rows, cols, HE, t_enc, t_dec):
+    def _calculate_msr(self, data, rows, cols):
         """Calculate the mean squared residues of the rows, of the columns and of the full data matrix."""
         sub_data = data[rows][:, cols]
 
@@ -232,7 +217,7 @@ class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
 
         return msr, row_msr, col_msr
 
-    def _calculate_msr_col_addition(self, data, rows, cols, HE, t_enc, t_dec):
+    def _calculate_msr_col_addition(self, data, rows, cols):
         """Calculate the mean squared residues of the columns for the node addition step."""
         sub_data = data[rows][:, cols]
         sub_data_rows = data[rows]
@@ -247,7 +232,7 @@ class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
 
         return col_msr
 
-    def _calculate_msr_row_addition(self, data, rows, cols, HE, t_enc, t_dec):
+    def _calculate_msr_row_addition(self, data, rows, cols):
         """Calculate the mean squared residues of the rows and of the inverse of the rows for
         the node addition step."""
         sub_data = data[rows][:, cols]

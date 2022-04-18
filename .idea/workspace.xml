@@ -9,6 +9,8 @@
       <change afterPath="$PROJECT_DIR$/biclustlib/algorithms/type4.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/biclustlib/evaluation/evaluation.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/examples/secured_cheng_church_yeast.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biclustlib/algorithms/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/biclustlib/algorithms/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +69,6 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "last_opened_file_path": "/home/shokofehvs/github/biclustlib",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
   }
@@ -284,7 +285,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650300586685</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Update file">
+      <created>1650301222769</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1650301222769</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -30,12 +30,3 @@ m1 = time.perf_counter()
 print("Time Performance in Calculating Homomorphically: ", m1 - m0, "Seconds")
 
 
-# df = pd.DataFrame(biclustering)
-# df["index"] = df.index.values
-# parallel_coordinates(df, "index", linewidth=1.0)
-# plt.title('Biclusters')
-# plt.xlabel('Condition')
-# plt.ylabel('Expression level')
-# plt.gca().legend_ = None
-# plt.show()
-

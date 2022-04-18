@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6a49a30-40d8-42ca-99ae-5f4ed3ad0506" name="Changes" comment="Update file">
-      <change afterPath="$PROJECT_DIR$/biclustlib/algorithms/secca.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/biclustlib/algorithms/type1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/biclustlib/algorithms/type2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/biclustlib/algorithms/type3.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/biclustlib/algorithms/type4.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/biclustlib/evaluation/evaluation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/secured_cheng_church_yeast.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biclustlib/algorithms/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/biclustlib/algorithms/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biclustlib/algorithms/type1.py" beforeDir="false" afterPath="$PROJECT_DIR$/biclustlib/algorithms/type1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/biclustlib/algorithms/type2.py" beforeDir="false" afterPath="$PROJECT_DIR$/biclustlib/algorithms/type2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -292,7 +285,21 @@
       <option name="project" value="LOCAL" />
       <updated>1650301222769</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Update file">
+      <created>1650301511965</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1650301511965</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Update file">
+      <created>1650301894567</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1650301894567</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

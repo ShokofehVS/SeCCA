@@ -1,21 +1,10 @@
 """
-    biclustlib: A Python library of biclustering algorithms and evaluation measures.
-    Copyright (C) 2017  Victor Alexandre Padilha
+    SeCCA: A Python library of privacy-preserved biclustering algorithm (Cheng and Church) with Homomorphic Encryption
 
-    This file is part of biclustlib.
+    Copyright (C) 2022  Shokofeh VahidianSadegh
 
-    biclustlib is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    This file is part of SeCCA.
 
-    biclustlib is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from ._base import BaseBiclusteringAlgorithm
@@ -36,17 +25,14 @@ import threading
 
 
 class SecuredChengChurchAlgorithmType4(BaseBiclusteringAlgorithm):
-    """Cheng and Church's Algorithm (CCA)
+    """Secured Cheng and Church's Algorithm (CCA)
 
-    CCA searches for maximal submatrices with a Mean Squared Residue value below a pre-defined threshold.
-
-    Reference
-    ----------
-    Cheng, Y., & Church, G. M. (2000). Biclustering of expression data. In Ismb (Vol. 8, No. 2000, pp. 93-103).
+    SeCCA searches for maximal submatrices with a Mean Squared Residue value below a pre-defined threshold
+        by Homomorphic Encryption operations
 
     Parameters
     ----------
-    num_biclusters : int, default: 10
+    num_biclusters : int, default: 5
         Number of biclusters to be found.
 
     msr_threshold : float or str, default: 'estimate'
@@ -75,6 +61,7 @@ class SecuredChengChurchAlgorithmType4(BaseBiclusteringAlgorithm):
         ----------
         data : numpy.ndarray
         """
+        print("SeCCA type 4")
         # Creating empty Pyfhel object
         HE = Pyfhel()
         # Generating context
@@ -230,13 +217,13 @@ class SecuredChengChurchAlgorithmType4(BaseBiclusteringAlgorithm):
         the node addition step."""
 
         # HE Computation (4)
+
         # Encrypting sub_data
         # 1. make sub_data a contiguous array in memory
         # 2. change 2d arrays into 1d
         # 3. Convert plaintext into ciphertext
         # 4. Reshape the array
-        # t_enc0 = time.perf_counter()
-
+        t_enc0 = time.perf_counter()
         sub_data = data[rows][:, cols]
         enc_sub_data = np.ascontiguousarray(sub_data)
         enc_sub_data = sub_data.flatten()
@@ -286,13 +273,12 @@ class SecuredChengChurchAlgorithmType4(BaseBiclusteringAlgorithm):
         # Encrypting Inverse row msr
         enc_row_inverse_msr = np.mean(enc_row_inverse_squared_residues, axis=1)
 
-        # t_enc1 = time.perf_counter()
-        # t_enc.append(t_enc1 - t_enc0)
-        # print("Encryption Time: ", round(sum(t_enc), 5), "Seconds")
-
-        # t_dec0 = time.perf_counter()
+        t_enc1 = time.perf_counter()
+        t_enc.append(t_enc1 - t_enc0)
+        print("Encryption Time: ", round(sum(t_enc), 5), "Seconds")
 
         # Decrypting row_msr
+        t_dec0 = time.perf_counter()
         decrypted_row_msr = np.empty(len(enc_row_msr), dtype=PyCtxt)
         for i in np.arange(len(enc_row_msr)):
             decrypted_row_msr[i] = HE.decryptFrac(enc_row_msr[i])
@@ -302,13 +288,13 @@ class SecuredChengChurchAlgorithmType4(BaseBiclusteringAlgorithm):
         for i in np.arange(len(enc_row_inverse_msr)):
             decrypted_inverse_row_msr[i] = HE.decryptFrac(enc_row_inverse_msr[i])
 
-        # t_dec1 = time.perf_counter()
-        # t_dec.append(t_dec1 - t_dec0)
-        # print("Decryption time: ", round(sum(t_dec), 5), "Seconds")
+        t_dec1 = time.perf_counter()
+        t_dec.append(t_dec1 - t_dec0)
+        print("Decryption time: ", round(sum(t_dec), 5), "Seconds")
 
         return decrypted_row_msr, decrypted_inverse_row_msr
 
-    def _validate_parameters(self):
+def _validate_parameters(self):
         if self.num_biclusters <= 0:
             raise ValueError("num_biclusters must be > 0, got {}".format(self.num_biclusters))
 

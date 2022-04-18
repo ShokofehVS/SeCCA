@@ -294,7 +294,7 @@ class SecuredChengChurchAlgorithmType4(BaseBiclusteringAlgorithm):
 
         return decrypted_row_msr, decrypted_inverse_row_msr
 
-def _validate_parameters(self):
+    def _validate_parameters(self):
         if self.num_biclusters <= 0:
             raise ValueError("num_biclusters must be > 0, got {}".format(self.num_biclusters))
 

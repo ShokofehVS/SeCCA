@@ -82,7 +82,7 @@ class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
         t_enc1 = time.perf_counter()
         print("Encryption Time: ", round(t_enc1 - t_enc0, 5), "Seconds")
 
-        # Decrypting min, max values, msr_threshold and msr_thr
+        # Decrypting msr_threshold and msr_thr
         t_dec0 = time.perf_counter()
         self.msr_threshold = self.msr_threshold.decrypt()
         msr_thr = msr_thr.decrypt()

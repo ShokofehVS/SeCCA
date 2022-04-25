@@ -7,5 +7,5 @@ setup(name='biclustlib',
       author='...',
       author_email='...',
       license='MIT',
-      packages=['SeCCA'],
+      packages=['biclustlib'],
       zip_safe=False)

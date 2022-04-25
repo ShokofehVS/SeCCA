@@ -72,20 +72,18 @@ class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
 
         # Encrypting min, max values and msr_threshold values
         t_enc0 = time.perf_counter()
-        max_value = HE.encryptInt(max_value)
-        min_value = HE.encryptInt(min_value)
+        enc_max_value = HE.encryptInt(max_value)
+        enc_min_value = HE.encryptInt(min_value)
         self.msr_threshold = HE.encryptInt(self.msr_threshold)
 
         # Computing msr_thr homomorphically
-        msr_thr = (((max_value - min_value) ** 2) / 12) * 0.005 if self.msr_threshold == 'estimate' else self.msr_threshold
+        msr_thr = (((enc_max_value - enc_min_value) ** 2) / 12) * 0.005 if self.msr_threshold == 'estimate' else self.msr_threshold
 
         t_enc1 = time.perf_counter()
         print("Encryption Time: ", round(t_enc1 - t_enc0, 5), "Seconds")
 
         # Decrypting min, max values, msr_threshold and msr_thr
         t_dec0 = time.perf_counter()
-        max_value = max_value.decrypt()
-        min_value = min_value.decrypt()
         self.msr_threshold = self.msr_threshold.decrypt()
         msr_thr = msr_thr.decrypt()
 

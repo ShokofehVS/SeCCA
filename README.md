@@ -3,15 +3,15 @@ Secured Cheng and Church Algorithm perform encrypted computations such as sum, o
 
 ## Installation
 First you need to ensure that all packages have been installed.
-numpy~=1.22.3
-setuptools~=60.2.0
-pandas~=1.4.2
-scikit-learn~=1.0.2
-Pyfhel~=2.3.1
-Bottleneck~=1.3.4
-matplotlib~=3.5.1
-scipy~=1.8.0
-munkres~=1.1.4
++ numpy~=1.22.3
++ setuptools~=60.2.0
++ pandas~=1.4.2
++ scikit-learn~=1.0.2
++ Pyfhel~=2.3.1
++ Bottleneck~=1.3.4
++ matplotlib~=3.5.1
++ scipy~=1.8.0
++ munkres~=1.1.4
 
 ## Biclustering Algorithm
 [Cheng and Church's Algorithm (CCA)](https://www.researchgate.net/profile/George_Church/publication/2329589_Biclustering_of_Expression_Data/links/550c04030cf2063799394f5e.pdf);

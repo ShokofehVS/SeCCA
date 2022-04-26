@@ -18,7 +18,7 @@ First you need to ensure that all packages have been installed.
 
 ## Gene Expression Data Set
 
-* *Saccharomyces cerevisiae* microarray dataset from [Tavazoie et al. (1999)](http://www.alterlab.org/teaching/BIOEN3070/papers/Tavazoie_1999.pdf) which was used in [(Cheng and Church, 2000)](https://www.researchgate.net/profile/George_Church/publication/2329589_Biclustering_of_Expression_Data/links/550c04030cf2063799394f5e.pdf);
+ *Saccharomyces cerevisiae* microarray dataset from [Tavazoie et al. (1999)](http://www.alterlab.org/teaching/BIOEN3070/papers/Tavazoie_1999.pdf) which was used in [(Cheng and Church, 2000)](https://www.researchgate.net/profile/George_Church/publication/2329589_Biclustering_of_Expression_Data/links/550c04030cf2063799394f5e.pdf);
 
 ## External Evaluation Measure
 
@@ -48,8 +48,10 @@ print(biclustering)
 
 m1 = time.perf_counter()
 print("Time Performance in Calculating Homomorphically: ", m1 - m0, "Seconds")
-
+```
 ## Example of Secured Cheng and Church Algorithm (SeCCA)
+
+```python
 import time
 from biclustlib.algorithms import SecuredChengChurchAlgorithm
 from biclustlib.datasets import load_yeast_tavazoie
@@ -71,3 +73,4 @@ biclustering = secca.run(data)
 
 m1 = time.perf_counter()
 print("Time Performance in Calculating Homomorphically: ", round(m1 - m0, 5), "Seconds")
+```

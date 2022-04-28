@@ -70,28 +70,26 @@ class SecuredChengChurchAlgorithm(BaseBiclusteringAlgorithm):
 
         # SeCCA Type 1
 
-        # Encrypting min, max values and msr_threshold values
+        # Encrypting min, max and msr_threshold values
         t_enc0 = time.perf_counter()
-        max_value = HE.encryptInt(max_value)
-        min_value = HE.encryptInt(min_value)
+        enc_max_value = HE.encryptInt(max_value)
+        enc_min_value = HE.encryptInt(min_value)
         self.msr_threshold = HE.encryptInt(self.msr_threshold)
 
         # Computing msr_thr homomorphically
-        msr_thr = (((max_value - min_value) ** 2) / 12) * 0.005 if self.msr_threshold == 'estimate' else self.msr_threshold
+        msr_thr = (((enc_max_value - enc_min_value) ** 2) / 12) * 0.005 if self.msr_threshold == 'estimate' else self.msr_threshold
 
         t_enc1 = time.perf_counter()
         print("Encryption Time: ", round(t_enc1 - t_enc0, 5), "Seconds")
 
-        # Decrypting min, max values, msr_threshold and msr_thr
+        # Decrypting msr_threshold and msr_thr
         t_dec0 = time.perf_counter()
-        max_value = max_value.decrypt()
-        min_value = min_value.decrypt()
         self.msr_threshold = self.msr_threshold.decrypt()
         msr_thr = msr_thr.decrypt()
 
         t_dec1 = time.perf_counter()
         print("Decryption time: ", round(t_dec1 - t_dec0, 5), "Seconds")
-
+        
         biclusters = []
         t_enc = []
         t_dec = []
@@ -195,7 +193,7 @@ class SecuredChengChurchAlgorithm(BaseBiclusteringAlgorithm):
                 stop = True
 
     def _calculate_msr(self, data, rows, cols, HE, t_enc, t_dec):
-        """Calculate the mean squared residues of the rows, of the columns and of the full data matrix."""
+        """Calculate the mean squared residues of the rows, of the columns and of the full data matrix by homomorphic encryption."""
 
         # SeCCA Type 2
 
@@ -263,7 +261,7 @@ class SecuredChengChurchAlgorithm(BaseBiclusteringAlgorithm):
         return decrypted_msr, decrypted_msr_row, decrypted_msr_col
 
     def _calculate_msr_col_addition(self, data, rows, cols, HE, t_enc, t_dec):
-        """Calculate the mean squared residues of the columns for the node addition step."""
+        """Calculate the mean squared residues of the columns for the node addition step by homomorphic encryption."""
 
         # SeCCA Type 3
 
@@ -331,7 +329,7 @@ class SecuredChengChurchAlgorithm(BaseBiclusteringAlgorithm):
 
     def _calculate_msr_row_addition(self, data, rows, cols, HE, t_enc, t_dec):
         """Calculate the mean squared residues of the rows and of the inverse of the rows for
-        the node addition step."""
+        the node addition step by homomorphic encryption."""
 
         # HE Computation (4)
 

@@ -25,7 +25,7 @@ import threading
 
 
 class SecuredChengChurchAlgorithmType2(BaseBiclusteringAlgorithm):
-    """Secured Cheng and Church's Algorithm (CCA)
+    """Secured Cheng and Church's Algorithm (SeCCA Type 2)
 
     SeCCA searches for maximal submatrices with a Mean Squared Residue value below a pre-defined threshold
         by Homomorphic Encryption operations
@@ -181,7 +181,7 @@ class SecuredChengChurchAlgorithmType2(BaseBiclusteringAlgorithm):
                 stop = True
 
     def _calculate_msr(self, data, rows, cols, HE, t_enc, t_dec):
-        """Calculate the mean squared residues of the rows, of the columns and of the full data matrix."""
+        """Calculate the mean squared residues of the rows, of the columns and of the full data matrix by homomorphic encryption"""
 
         # SeCCA Type 2
 

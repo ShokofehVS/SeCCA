@@ -1,5 +1,5 @@
 # SeCCA
-Secured Cheng and Church Algorithm perform encrypted computations such as sum, or matrix multiplication in Python for biclustering algorithm under the MIT license.
+Secured Cheng and Church Algorithm performs encrypted computations such as sum, or matrix multiplication in Python for biclustering algorithm under the MIT license.
 
 ## Installation
 First you need to ensure that all packages have been installed.

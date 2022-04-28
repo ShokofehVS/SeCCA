@@ -17,7 +17,7 @@ import time
 
 
 class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
-    """Secured Cheng and Church's Algorithm (CCA)
+    """Secured Cheng and Church's Algorithm (SeCCA Type 1)
 
     SeCCA searches for maximal submatrices with a Mean Squared Residue value below a pre-defined threshold
         by Homomorphic Encryption operations
@@ -70,7 +70,7 @@ class SecuredChengChurchAlgorithmType1(BaseBiclusteringAlgorithm):
 
         # SeCCA Type 1
 
-        # Encrypting min, max values and msr_threshold values
+        # Encrypting min, max and msr_threshold values
         t_enc0 = time.perf_counter()
         enc_max_value = HE.encryptInt(max_value)
         enc_min_value = HE.encryptInt(min_value)

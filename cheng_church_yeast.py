@@ -18,6 +18,6 @@ biclustering = cca.run(data)
 print(biclustering)
 
 m1 = time.perf_counter()
-print("Time Performance in Calculating Homomorphically: ", m1 - m0, "Seconds")
+print("Time Performance in Original Algorithm: ", round(m1 - m0, 5), "Seconds")
 
 

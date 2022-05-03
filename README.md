@@ -25,11 +25,11 @@ If you miss something you can simply type:
 
 If you have all dependencies installed:
 
-	   > python setup.py install`
+	   > python setup.py install
 
-To install Pyfhel, on Linux (`gcc6`) for Python (`3.5+`) should be installed. (more information regarding [installation of Pyfhel ](https://github.com/ibarrond/Pyfhel))
+To install Pyfhel, on Linux,`gcc6` for Python (`3.5+`) should be installed. (more information regarding [installation of Pyfhel ](https://github.com/ibarrond/Pyfhel))
 
-	   > apt install gcc `
+	   > apt install gcc 
 
 ## Biclustering Algorithm
 Biclustering or simultaneous clustering of both genes and conditions as a new paradigm was introduced by [Cheng and Church's Algorithm (CCA)](https://www.researchgate.net/profile/George_Church/publication/2329589_Biclustering_of_Expression_Data/links/550c04030cf2063799394f5e.pdf). The concept of bicluster refers to a subset of

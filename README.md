@@ -1,32 +1,35 @@
 # SeCCA
 **SeCCA**: **Se**cured **C**heng and **C**hurch **A**lgorithm: privacy-preserving gene expression data analysis by biclustering algorithm -- Cheng and Church algorithm -- over yeast Saccharomyces cerevisiae cell cycle performing Homomorphic Encryption operations such as sum, or matrix multiplication in Python under the MIT license.
-We apply [Pyfhel](https://www.eurecom.fr/publication/6801/download/data-publi-6801.pdf) as a python wrapper for the Microsoft SEAL library. 
+We apply [Pyfhel](https://pyfhel.readthedocs.io/en/latest/) as a python wrapper for the Microsoft SEAL library. 
 
 ## Installation
 First you need to ensure that all packages have been installed.
 + See `requirements.txt`
-+ numpy~=1.22.3
-+ setuptools~=60.2.0
-+ pandas~=1.4.2
-+ scikit-learn~=1.0.2
-+ Pyfhel~=2.3.1
-+ Bottleneck~=1.3.4
-+ matplotlib~=3.5.1
-+ scipy~=1.8.0
-+ munkres~=1.1.4
++ numpy>=1.22.3
++ setuptools>=60.2.0
++ pandas>=1.4.2
++ scikit-learn>=1.0.2
++ Pyfhel>=2.3.1
++ Bottleneck>=1.3.4
++ matplotlib>=3.5.2
++ scipy>=1.8.0
++ munkres>=1.1.4
 
 You can clone this repository:
 
 	   > git clone https://github.com/ShokofehVS/SeCCA.git
 
 If you miss something you can simply type:
-+ `pip install -r requirements.txt`
+
+	   > pip install -r requirements.txt
 
 If you have all dependencies installed:
-+ `python setup.py install`
+
+	   > python setup.py install`
 
 To install Pyfhel, on Linux (`gcc6`) for Python (`3.5+`) should be installed. (more information regarding [installation of Pyfhel ](https://github.com/ibarrond/Pyfhel))
-+ apt install gcc 
+
+	   > apt install gcc `
 
 ## Biclustering Algorithm
 Biclustering or simultaneous clustering of both genes and conditions as a new paradigm was introduced by [Cheng and Church's Algorithm (CCA)](https://www.researchgate.net/profile/George_Church/publication/2329589_Biclustering_of_Expression_Data/links/550c04030cf2063799394f5e.pdf). The concept of bicluster refers to a subset of

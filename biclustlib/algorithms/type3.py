@@ -61,7 +61,7 @@ class SecuredChengChurchAlgorithmType3(BaseBiclusteringAlgorithm):
         ----------
         data : numpy.ndarray
         """
-        print("SeCCA type 3")
+        print("SeCCA Step 3")
         # Creating empty Pyfhel object
         HE = Pyfhel()
         # Generating context

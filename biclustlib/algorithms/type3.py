@@ -65,7 +65,7 @@ class SecuredChengChurchAlgorithmType3(BaseBiclusteringAlgorithm):
         # Creating empty Pyfhel object
         HE = Pyfhel()
         # Generating context
-        HE.contextGen(p=65537, m=2048, flagBatching=True, base=2, intDigits=64, fracDigits=3)
+        HE.contextGen(p = 1964769281, m = 8192, sec = 192, flagBatching = True, base = 2, intDigits = 64, fracDigits = 4096)
         # Key Generation
         HE.keyGen()
 

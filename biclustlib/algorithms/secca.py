@@ -6,6 +6,7 @@
     This file is part of SeCCA.
 
 """
+from sys import getsizeof
 
 from ._base import BaseBiclusteringAlgorithm
 from ..models import Bicluster, Biclustering
@@ -53,11 +54,11 @@ class SecuredChengChurchAlgorithm(BaseBiclusteringAlgorithm):
         ----------
         data : numpy.ndarray
         """
-        print("SeCCA types 1 to 4")
+        print("SeCCA Steps 1 to 4")
         # Creating empty Pyfhel object
         HE = Pyfhel()
         # Generating context
-        HE.contextGen(p=65537, m=2048, flagBatching=True, base=2, intDigits=64, fracDigits=3)
+        HE.contextGen(p=1964769281, m=8192, sec=192, flagBatching=True, base=2, intDigits=64, fracDigits=4096)
         # Key Generation
         HE.keyGen()
 

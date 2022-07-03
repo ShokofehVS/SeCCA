@@ -61,11 +61,11 @@ class SecuredChengChurchAlgorithmType2(BaseBiclusteringAlgorithm):
         ----------
         data : numpy.ndarray
         """
-        print("SeCCA type 2")
+        print("SeCCA Step 2")
         # Creating empty Pyfhel object
         HE = Pyfhel()
         # Generating context
-        HE.contextGen(p=65537, m=2048, flagBatching=True, base=2, intDigits=64, fracDigits=3)
+        HE.contextGen(p = 1964769281, m = 8192, sec = 192, flagBatching = True, base = 2, intDigits = 64, fracDigits = 4096)
         # Key Generation
         HE.keyGen()
 
@@ -216,7 +216,8 @@ class SecuredChengChurchAlgorithmType2(BaseBiclusteringAlgorithm):
         enc_squared_residues = enc_residues ** 2
 
         # Encrypting msr
-        enc_msr = np.sum(enc_squared_residues) / len(enc_squared_residues)
+        enc_squared_residues_flatten = enc_squared_residues.flatten()
+        enc_msr = np.sum(enc_squared_residues) / len(enc_squared_residues_flatten)
 
         # Encrypting row_msr
         enc_row_msr = np.mean(enc_squared_residues, axis=1)

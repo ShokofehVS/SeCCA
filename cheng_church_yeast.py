@@ -7,15 +7,13 @@ from biclustlib.algorithms import SecuredChengChurchAlgorithmType3
 from biclustlib.algorithms import SecuredChengChurchAlgorithmType4
 from biclustlib.evaluation import clustering_error
 from biclustlib.datasets import load_yeast_tavazoie
-from biclustlib.datasets import load_human_alizadeh
 from biclustlib.datasets import synthetic
 import numpy as np
 
 m0 = time.perf_counter()
 
 # load yeast data used in the original Cheng and Church's paper
-# data = load_yeast_tavazoie().values
-# data = load_human_alizadeh().values
+data = load_yeast_tavazoie().values
 # data, predicted = synthetic.make_const_data()
 # data, predicted = synthetic.make_scale_data()
 
